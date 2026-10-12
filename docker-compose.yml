@@ -1,0 +1,33 @@
+services:
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      TZ: Asia/Kolkata
+      MONGODB_URI: mongodb://mongodb:27017/drone-assistant
+      MONITOR_CRON: ${MONITOR_CRON:-0 9 * * *}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_ALLOWED_CHAT_ID: ${TELEGRAM_ALLOWED_CHAT_ID}
+      ENABLE_FIXTURES: ${ENABLE_FIXTURES:-}
+    env_file:
+      - .env
+
+volumes:
+  mongo_data:

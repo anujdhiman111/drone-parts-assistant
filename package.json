@@ -1,0 +1,41 @@
+{
+  "name": "drone-parts-assistant",
+  "version": "1.0.0",
+  "description": "Telegram bot + daily monitor for drone parts on Robu.in",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "start:dev": "tsx src/index.ts",
+    "monitor:now": "tsx src/scripts/monitor-now.ts",
+    "scrape": "tsx src/scripts/scrape-one.ts",
+    "dev": "tsx src/index.ts",
+    "test": "tsx --test src/sites/stock-keywords.test.ts src/monitor/change-detector.test.ts"
+  },
+  "keywords": [
+    "telegram",
+    "scraper",
+    "drone",
+    "robu"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.6",
+    "mongoose": "^9.11.1",
+    "node-cron": "^4.6.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "puppeteer": "^25.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/node-telegram-bot-api": "^0.64.15",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "puppeteer@25.13.0": true
+  }
+}
